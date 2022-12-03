@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql1": {
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/interjobsserver/databases/InterJobs",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:InterJobsDBCon",
+      "dynamicId": null
+    }
+  }
+}
