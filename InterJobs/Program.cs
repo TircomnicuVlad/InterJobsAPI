@@ -5,6 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+                      policy =>
+                      {
+                          policy.WithOrigins("http://example.com",
+                                              "http://www.contoso.com");
+                      });
+});
 builder.Services.AddControllers();
 builder.Services.AddDbContext<InterJobsContext>(options =>
 {
@@ -24,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
