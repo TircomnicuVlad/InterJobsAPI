@@ -66,6 +66,7 @@ namespace InterJobsAPI.Models
                     .HasForeignKey(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User");
+
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -102,6 +103,10 @@ namespace InterJobsAPI.Models
                     .HasForeignKey(d => d.UserTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserType");
+
+                entity.Property(f => f.PhoneNumber)
+                    .IsUnicode(false)
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<UserType>(entity =>
