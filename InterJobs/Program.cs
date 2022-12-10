@@ -10,9 +10,10 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
                       policy =>
                       {
-                          policy.WithOrigins("http://example.com",
-                                              "http://www.contoso.com")
-                          .AllowAnyHeader();
+                          policy.WithOrigins("http://localhost:5000/")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowAnyOrigin();
                       });
 });
 builder.Services.AddControllers();
@@ -34,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseCors();
 
