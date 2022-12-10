@@ -117,5 +117,20 @@ namespace InterJobsAPI.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+
+        [HttpGet]
+        [Route("Login")]
+        public async Task<ActionResult<User>> LoginUser(string email, string password)
+        {
+            var user = _context.Users.ToList().FirstOrDefault(u => u.Email == email && u.Password == password);
+
+            if(user != null)
+            {
+                return user;
+            }
+
+            return NotFound();
+        }
     }
 }
