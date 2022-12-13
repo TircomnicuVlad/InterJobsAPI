@@ -80,7 +80,7 @@ namespace InterJobsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            if(user.Id != Guid.Empty)
+            if(user.Id == Guid.Empty)
             {
                 user.Id = Guid.NewGuid();
             }

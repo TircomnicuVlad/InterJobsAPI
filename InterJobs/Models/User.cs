@@ -20,7 +20,7 @@ namespace InterJobsAPI.Models
         public string? PhoneNumber { get; set; }
 
         public virtual Image? ProfilePicture { get; set; }
-        public virtual UserType UserType { get; set; } = null!;
+        public virtual UserType? UserType { get; set; } = null!;
         public virtual ICollection<Job> Jobs { get; set; }
     }
 }
