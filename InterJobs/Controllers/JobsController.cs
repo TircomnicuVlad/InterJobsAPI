@@ -20,6 +20,7 @@ namespace InterJobsAPI.Controllers
         public JobsController(InterJobsContext context)
         {
             _context = context;
+            _context.ChangeTracker.LazyLoadingEnabled = false;
         }
 
         // GET: api/Jobs

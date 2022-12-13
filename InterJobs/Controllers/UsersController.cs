@@ -20,13 +20,14 @@ namespace InterJobsAPI.Controllers
         public UsersController(InterJobsContext context)
         {
             _context = context;
+            _context.ChangeTracker.LazyLoadingEnabled = true;
         }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Include("UserType").ToListAsync();
         }
 
         // GET: api/Users/5
@@ -79,6 +80,10 @@ namespace InterJobsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if(user.Id != Guid.Empty)
+            {
+                user.Id = Guid.NewGuid();
+            }
             _context.Users.Add(user);
             try
             {
