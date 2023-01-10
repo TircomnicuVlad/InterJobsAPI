@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using InterJobsAPI.Models;
 
 namespace InterJobsAPI.Models
 {
@@ -40,9 +41,49 @@ namespace InterJobsAPI.Models
                     .ValueGeneratedNever()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.ImageContent)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.ImageContent);
+            });
+            
+            modelBuilder.Entity<Document>(entity =>
+            {
+                entity.ToTable("Document");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.DocumentContent);
+            });
+
+            modelBuilder.Entity<JobApplication>(entity =>
+            {
+                entity.ToTable("JobApplication");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.JobID).HasColumnName("JobID");
+                entity.Property(e => e.UserID).HasColumnName("UserID");
+                entity.Property(e => e.CVID).HasColumnName("CVID");
+
+                entity.HasOne(d => d.Job)
+                     .WithMany(p => p.JobApplications)
+                     .HasForeignKey(d => d.JobID)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FK_JobApplication_Job");
+
+                entity.HasOne(d => d.User)
+                     .WithMany(p => p.JobApplications)
+                     .HasForeignKey(d => d.UserID)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FK_JobApplication_User");
+                
+                entity.HasOne(d => d.CV)
+                     .WithOne(p => p.JobApplication)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FK_JobApplication_Document");
+
             });
 
             modelBuilder.Entity<Job>(entity =>
@@ -67,6 +108,17 @@ namespace InterJobsAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User");
 
+                entity.Property(e => e.Location)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RequiredSkills)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -94,9 +146,8 @@ namespace InterJobsAPI.Models
                 entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
 
                 entity.HasOne(d => d.ProfilePicture)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.ProfilePictureId)
-                    .HasConstraintName("FK_Image");
+                    .WithOne(p => p.User)
+                    .HasConstraintName("FK_Image");  
 
                 entity.HasOne(d => d.UserType)
                     .WithMany(p => p.Users)
@@ -126,5 +177,7 @@ namespace InterJobsAPI.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<InterJobsAPI.Models.JobApplication> JobApplication { get; set; }
     }
 }

@@ -22,5 +22,6 @@ namespace InterJobsAPI.Models
         public virtual Image? ProfilePicture { get; set; }
         public virtual UserType? UserType { get; set; } = null!;
         public virtual ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<JobApplication> JobApplications { get; set; }
     }
 }
