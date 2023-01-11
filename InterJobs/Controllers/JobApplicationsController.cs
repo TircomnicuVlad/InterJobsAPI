@@ -78,10 +78,17 @@ namespace InterJobsAPI.Controllers
         // POST: api/JobApplications
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplication jobApplication)
+        public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplicationViewModel model)
         {
-            jobApplication.Status = (int)Status.Pending;
-            jobApplication.CV.Id = Guid.NewGuid();
+            JobApplication jobApplication = new JobApplication { 
+                CVID = Guid.NewGuid(),
+                Status = (int)Status.Pending,
+                Id = new Guid(),
+                JobID = model.JobID,
+                UserID = model.UserID,
+                CV = new Document { DocumentContent = model.CVContent}
+            };
+            jobApplication.CV.Id = jobApplication.CVID;
             _context.JobApplication.Add(jobApplication);
             try
             {
