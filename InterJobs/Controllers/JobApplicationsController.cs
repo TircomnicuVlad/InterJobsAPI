@@ -81,6 +81,7 @@ namespace InterJobsAPI.Controllers
         public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplication jobApplication)
         {
             jobApplication.Status = (int)Status.Pending;
+            jobApplication.CV.Id = Guid.NewGuid();
             _context.JobApplication.Add(jobApplication);
             try
             {
