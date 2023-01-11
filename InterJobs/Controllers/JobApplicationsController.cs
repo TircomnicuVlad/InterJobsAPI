@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InterJobsAPI.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace InterJobsAPI.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors]
     [ApiController]
     public class JobApplicationsController : ControllerBase
     {
