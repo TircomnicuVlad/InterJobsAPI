@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InterJobsAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using InterJobsAPI.Helpers;
 
 namespace InterJobsAPI.Controllers
 {
@@ -79,6 +80,7 @@ namespace InterJobsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplication jobApplication)
         {
+            jobApplication.Status = (int)Status.Pending;
             _context.JobApplication.Add(jobApplication);
             try
             {

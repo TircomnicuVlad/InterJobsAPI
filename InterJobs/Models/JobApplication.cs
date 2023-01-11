@@ -8,8 +8,8 @@
         public Guid CVID { get; set; }
         public int Status { get; set; }
 
-        public virtual Job Job { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
+        public virtual Job? Job { get; set; } = null!;
+        public virtual User? User { get; set; } = null!;
         public virtual Document CV { get; set; } = null!;
     }
 }
