@@ -78,7 +78,7 @@ namespace InterJobsAPI.Controllers
         // POST: api/JobApplications
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplicationViewModel model)
+        public async Task<ActionResult<JobApplication>> PostJobApplication([FromForm]JobApplicationViewModel model)
         {
             if (model.CVContent.Length > 0)
             {
@@ -92,7 +92,7 @@ namespace InterJobsAPI.Controllers
                     {
                         CVID = Guid.NewGuid(),
                         Status = (int)Status.Pending,
-                        Id = new Guid(),
+                        Id = Guid.NewGuid(),
                         JobID = model.JobID,
                         UserID = model.UserID,
                         CV = new Document { DocumentContent = fileBytes }
