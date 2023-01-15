@@ -7,7 +7,7 @@ namespace InterJobsAPI.Models
     {
 
         public Guid Id { get; set; }
-        public IFormFile ImageContent { get; set; } = null!;
+        public byte[] ImageContent { get; set; } = null!;
 
         public virtual User User { get; set; }
     }

@@ -6,7 +6,7 @@ namespace InterJobsAPI.Models
     {
 
         public Guid Id { get; set; }
-        public IFormFile DocumentContent { get; set; } = null!;
+        public byte[] DocumentContent { get; set; } = null!;
 
         public virtual JobApplication JobApplication { get; set; }
     }

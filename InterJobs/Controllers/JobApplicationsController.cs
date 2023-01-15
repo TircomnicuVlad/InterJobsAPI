@@ -80,33 +80,46 @@ namespace InterJobsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<JobApplication>> PostJobApplication(JobApplicationViewModel model)
         {
-            JobApplication jobApplication = new JobApplication { 
-                CVID = Guid.NewGuid(),
-                Status = (int)Status.Pending,
-                Id = new Guid(),
-                JobID = model.JobID,
-                UserID = model.UserID,
-                CV = new Document { DocumentContent = model.CVContent}
-            };
-            jobApplication.CV.Id = jobApplication.CVID;
-            _context.JobApplication.Add(jobApplication);
-            try
+            if (model.CVContent.Length > 0)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (JobApplicationExists(jobApplication.Id))
+                using (var ms = new MemoryStream())
                 {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+                    model.CVContent.CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                    JobApplication jobApplication = new JobApplication
+                    {
+                        CVID = Guid.NewGuid(),
+                        Status = (int)Status.Pending,
+                        Id = new Guid(),
+                        JobID = model.JobID,
+                        UserID = model.UserID,
+                        CV = new Document { DocumentContent = fileBytes }
+                    };
+                    jobApplication.CV.Id = jobApplication.CVID;
+                    _context.JobApplication.Add(jobApplication);
+                    try
+                    {
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateException)
+                    {
+                        if (JobApplicationExists(jobApplication.Id))
+                        {
+                            return Conflict();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
 
-            return CreatedAtAction("GetJobApplication", new { id = jobApplication.Id }, jobApplication);
+                    return CreatedAtAction("GetJobApplication", new { id = jobApplication.Id }, jobApplication);
+                }
+            }
+            return BadRequest();
+           
         }
 
         // DELETE: api/JobApplications/5
