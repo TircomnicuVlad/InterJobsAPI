@@ -7,7 +7,7 @@ namespace InterJobsAPI.Helpers
         public Guid Id { get; set; }
         public Guid JobID { get; set; }
         public Guid UserID { get; set; }
-        public byte[] CVContent { get; set; }
+        public IFormFile CVContent { get; set; }
         public int Status { get; set; }
 
     }
