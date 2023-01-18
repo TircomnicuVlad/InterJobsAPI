@@ -78,7 +78,7 @@ namespace InterJobsAPI.Controllers
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Job>> PostJob(Job job)
+        public async Task<ActionResult<Job>> PostJob([FromForm]Job job)
         {
             job.Id = Guid.NewGuid();
             _context.Jobs.Add(job);
