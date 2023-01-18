@@ -106,7 +106,7 @@ namespace InterJobsAPI.Models
                     .WithMany(p => p.Jobs)
                     .HasForeignKey(d => d.EmployerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User");
+                    .HasConstraintName("FK_User").IsRequired(false);
 
                 entity.Property(e => e.Location)
                     .HasMaxLength(100)
