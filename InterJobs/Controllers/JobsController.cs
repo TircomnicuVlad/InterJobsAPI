@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InterJobsAPI.Models;
 using Microsoft.AspNetCore.Cors;
+using InterJobsAPI.Helpers;
 
 namespace InterJobsAPI.Controllers
 {
@@ -78,8 +79,15 @@ namespace InterJobsAPI.Controllers
         // POST: api/Jobs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Job>> PostJob([FromForm]Job job)
+        public async Task<ActionResult<Job>> PostJob([FromForm]JobViewModel model)
         {
+            Job job = new Job { Name = model.Name,
+                Description = model.Description,
+                EmployerId = model.EmployerId,
+                Location = model.Location,
+                OpenPositionsNumber = Int32.Parse(model.OpenPositionsNumber),
+                RequiredSkills = model.RequiredSkills,
+                Type = model.Type };
             job.Id = Guid.NewGuid();
             _context.Jobs.Add(job);
             try
