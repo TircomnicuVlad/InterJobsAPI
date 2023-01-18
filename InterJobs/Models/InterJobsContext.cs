@@ -161,10 +161,11 @@ namespace InterJobsAPI.Models
                     .HasMaxLength(50);
 
                 entity.HasMany(d => d.Jobs)
-                    .WithOne(d => d.Employer)
-                    .HasForeignKey(d => d.EmployerId)
+                    .WithOne(p => p.Employer)
+                    .HasPrincipalKey(p => p.Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_User").IsRequired(false);
+                    .HasConstraintName("FK_User")
+                    .IsRequired(false);
             });
 
             modelBuilder.Entity<UserType>(entity =>
