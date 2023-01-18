@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using InterJobsAPI.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InterJobsAPI.Models
 {
@@ -158,6 +159,12 @@ namespace InterJobsAPI.Models
                 entity.Property(f => f.PhoneNumber)
                     .IsUnicode(false)
                     .HasMaxLength(50);
+
+                entity.HasMany(d => d.Jobs)
+                    .WithOne(d => d.Employer)
+                    .HasForeignKey(d => d.EmployerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User").IsRequired(false);
             });
 
             modelBuilder.Entity<UserType>(entity =>
