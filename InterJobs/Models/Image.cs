@@ -9,6 +9,6 @@ namespace InterJobsAPI.Models
         public Guid Id { get; set; }
         public byte[] ImageContent { get; set; } = null!;
 
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
     }
 }

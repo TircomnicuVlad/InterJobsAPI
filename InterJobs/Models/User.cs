@@ -19,9 +19,9 @@ namespace InterJobsAPI.Models
         public string? Description { get; set; }
         public string? PhoneNumber { get; set; }
 
-        public virtual Image? ProfilePicture { get; set; }
+        public virtual Image? ProfilePicture { get; set; } = null!;
         public virtual UserType? UserType { get; set; } = null!;
-        public virtual ICollection<Job> Jobs { get; set; }
-        public virtual ICollection<JobApplication>? JobApplications { get; set; }
+        public virtual ICollection<Job>? Jobs { get; set; } = null!;
+        public virtual ICollection<JobApplication>? JobApplications { get; set; } = null!;
     }
 }

@@ -14,7 +14,7 @@ namespace InterJobsAPI.Models
         public string? RequiredSkills { get; set; }
         public string? Type { get; set; }
 
-        public virtual User Employer { get; set; } = null!;
-        public virtual ICollection<JobApplication> JobApplications { get; set; } = null!;
+        public virtual User? Employer { get; set; } = null!;
+        public virtual ICollection<JobApplication>? JobApplications { get; set; } = null!;
     }
 }

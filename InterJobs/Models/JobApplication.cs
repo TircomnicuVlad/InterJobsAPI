@@ -10,6 +10,6 @@
 
         public virtual Job? Job { get; set; } = null!;
         public virtual User? User { get; set; } = null!;
-        public virtual Document CV { get; set; } = null!;
+        public virtual Document? CV { get; set; } = null!;
     }
 }
