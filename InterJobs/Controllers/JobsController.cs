@@ -80,6 +80,7 @@ namespace InterJobsAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Job>> PostJob(Job job)
         {
+            job.Id = Guid.NewGuid();
             _context.Jobs.Add(job);
             try
             {
